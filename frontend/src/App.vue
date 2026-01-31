@@ -58,28 +58,32 @@ export default {
       }
     },
 
-    async updateUser(userData) {
-      try {
-        const response = await UserService.updateUser(this.editUser._id, userData)
-        const index = this.users.findIndex(u => u._id === this.editUser._id)
-        this.users.splice(index, 1, response.data)
-        this.editUser = null
-      } catch (error) {
-        console.error("Update failed:", error)
-      }
-    },
+   async updateUser(userData) {
+  try {
+    const response = await UserService.updateUser(this.editUser.id, userData)
+    const index = this.users.findIndex(u => u.id === this.editUser.id)
+    this.users.splice(index, 1, response.data)
+    this.editUser = null
+    alert("User updated successfully")
+  } catch (error) {
+    console.error("Update failed:", error)
+    alert("Update failed")
+  }
+},
 
-    async deleteUser(index) {
-      const user = this.users[index]
-      if (confirm(`Delete ${user.fullName}?`)) {
-        try {
-          await UserService.deleteUser(user._id)
-          this.users.splice(index, 1)
-        } catch (error) {
-          console.error("Delete failed:", error)
-        }
-      }
-    },
+  async deleteUser(index) {
+  const user = this.users[index]
+  if (confirm(`Delete ${user.fullName}?`)) {
+    try {
+      await UserService.deleteUser(user.id)
+      this.users.splice(index, 1)
+      alert("User deleted successfully")
+    } catch (error) {
+      console.error("Delete failed:", error)
+      alert("Delete failed")
+    }
+  }
+},
 
     setEditUser(user) {
       this.editUser = user
